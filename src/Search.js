@@ -41,31 +41,35 @@ class Search extends React.Component {
                />
     }
     */
-   
+
     render() {
         return (
             <div>
                 <Form className="searchbar-container" >
-                    <Form.Row className="searchbar d-flex justify-content-center">
+                    <Form.Row className="searchbar d-flex text-left">
                         <Col>
                             <Form.Group controlId="formAirline">
+                                <Form.Label className="">Airline:</Form.Label>
                                 <Form.Control ref={this.airline} type="text" placeholder="Airline"/>
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group controlId="formDeparture">
+                                <Form.Label>Departure:</Form.Label>
                                 <Form.Control ref={this.departure} type="text" placeholder="Departure"/>
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group controlId="formArrival">
+                                <Form.Label>Arrival:</Form.Label>
                                 <Form.Control ref={this.arrival} type="text" placeholder="Arrival"/>
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group controlId="formDayOfWeek">
+                                <Form.Label>Day of the week:</Form.Label>
                                 <Form.Control ref={this.dayOfWeek} as="select" defaultValue="Day of Week">
-                                    <option>Day of Week</option>
+                                    <option>Any</option>
                                     <option>Monday</option>
                                     <option>Tuesday</option>
                                     <option>Wednesday</option>
@@ -79,8 +83,9 @@ class Search extends React.Component {
                         
                         <Col>
                             <Form.Group controlId="formTime">
+                                <Form.Label>Time of day:</Form.Label>
                                 <Form.Control ref={this.time} as="select" defaultValue="Time">
-                                    <option>Time</option>
+                                    <option>Any</option>
                                     <option>2:00 AM - 5:59 AM</option>
                                     <option>6:00 AM - 9:59 AM</option>
                                     <option>10:00 AM - 1:59 PM</option>
