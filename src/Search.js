@@ -11,36 +11,47 @@ class Search extends React.Component {
         this.dayOfWeek = React.createRef();
         this.time = React.createRef();
         this.airline = React.createRef();
-        this.handleSubmit = this.handleSubmit.bind(this);
-        /*
+
+
         this.state = {
-            time: "api isn't called"
+            departure: '',
+            arrival: '',
+            dayOfWeek: '',
+            time: '',
+            airline: '',
         }
-        */
+
+
+
+        this.result = React.createRef();
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.renderSearchResult = this.renderSearchResult.bind(this);
+        
     }
 
-    handleSubmit(event) {
-        // require departure, arrival, date, time, airline
-        // possibly require crowded and safety?
-        // don't require comments
-        alert('test submitted ' + this.departure.current.value 
-                + " to " + this.arrival.current.value
-                + " on " + this.dayOfWeek.current.value + ", " + this.time.current.value
-                + " with " + this.airline.current.value);
-        // actually need to save to database
+    handleSubmit() {
+        this.setState({
+            departure: this.departure.current.value,
+            arrival: this.arrival.current.value,
+            dayOfWeek: this.dayOfWeek.current.value,
+            time: this.time.current.value,
+            airline: this.airline.current.value,
+        });
     }
 
-    /*
-    renderSearchResult() {
-        return <SearchResult
-                    departure = {this.departure}
-                    arrival = {this.arrival}
-                    dayOfWeek = {this.dayOfWeek}
-                    time = {this.time}
-                    airline = {this.airline}
-               />
+    renderSearchResult(){
+        const results = Object.assign({}, this.state);
+        for (const i in results) {
+            if (results[i] == '') {
+                return null;
+            }
+        }
+        return(
+            <SearchResult departure={this.state.departure}
+                          
+            />
+        )
     }
-    */
 
     render() {
         return (
@@ -100,26 +111,27 @@ class Search extends React.Component {
                         </Col>
                     </Form.Row>
                 </Form>
+                {this.renderSearchResult()}
             </div>
         )
     }
-    /*
-    componentDidMount() {
-        fetch('/time').then(res => res.json()).then(data => {
-            console.log(data);
-            this.setState({time: data.time});
-        });
-    }
     
+}
+
+
+class SearchResult extends React.Component {
+    constructor() {
+        this.comments = []
+        this.crowded = 0
+        this.safety = 0
+    }
     render() {
         return (
-        <div>
-            <p>Search component</p>
-            <p>Test api: {this.state.time}</p>
-        </div>
-        );
+            <div>
+                <p>{this.props.departure}</p>
+            </div>
+        )
     }
-    */
 }
 
 export default Search;
