@@ -7,13 +7,29 @@
   -moz-osx-font-smoothing: grayscale;
 }*/
 
+:root {
+  --main-purple-color: #c8b8db;
+  --secondary-blue-color: #3066be;
+  --primary-text-color: #3c3744;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
+.App {
+  background-color: var(--main-purple-color);
+  color: var(--primary-text-color); 
+}
+
 .body {
-  margin: 10%;
+  margin: 5% 10% 0%;
+  height: 100vh;
+}
+
+.body h1 {
+  margin-bottom: 1em;
 }
 
 /* SEARCH */
@@ -33,4 +49,11 @@ code {
 
 .group-margin {
   margin-bottom: 1rem;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  padding-top: 2.5em;
+  font-size: 20px;
 }
