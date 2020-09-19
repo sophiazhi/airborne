@@ -95,8 +95,8 @@ class Search extends React.Component {
                                 </Form.Control>
                             </Form.Group>
                         </Col>
-                        <Col className="col-sm-1">
-                            <Button onClick={this.handleSubmit}>Search</Button>
+                        <Col className="col-sm-1 align-to-end">
+                            <Button className="group-margin" onClick={this.handleSubmit}>Search</Button>
                         </Col>
                     </Form.Row>
                 </Form>
