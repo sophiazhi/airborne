@@ -120,7 +120,8 @@ class Search extends React.Component {
 
 
 class SearchResult extends React.Component {
-    constructor() {
+    constructor(props) {
+        super(props);
         this.comments = []
         this.crowded = 0
         this.safety = 0
