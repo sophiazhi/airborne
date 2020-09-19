@@ -100,12 +100,13 @@ class Search extends React.Component {
                                 <Form.Label>Time of day:</Form.Label>
                                 <Form.Control ref={this.time} as="select" defaultValue="Time">
                                     <option>Any</option>
-                                    <option>2:00 AM - 5:59 AM</option>
-                                    <option>6:00 AM - 9:59 AM</option>
-                                    <option>10:00 AM - 1:59 PM</option>
-                                    <option>2:00 PM - 5:59 PM</option>
-                                    <option>6:00 PM - 9:59 PM</option>
-                                    <option>10:00 PM - 1:59 AM</option>
+                                    <option>Early morning</option>
+                                    <option>Morning</option>
+                                    <option>Midday</option>
+                                    <option>Early afternoon</option>
+                                    <option>Late afternoon</option>
+                                    <option>Evening</option>
+                                    <option>Late night</option>
                                 </Form.Control>
                             </Form.Group>
                         </Col>
@@ -150,7 +151,7 @@ class SearchContainer extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className='body'>
                 <Row>
                     <Col>
                         {this.state.searchResults.map((result, index) => (
