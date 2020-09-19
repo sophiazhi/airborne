@@ -14,12 +14,30 @@ class Search extends React.Component {
         this.time = React.createRef();
         this.airline = React.createRef();
 
+        //fake map
+        this.searchResult = new Map()
+        this.searchResult['airline'] = 'delta'
+        this.searchResult['arrival'] = 'nyc'
+        this.searchResult['departure'] = 'boston'
+        this.searchResult['safety'] = '68'
+        this.searchResult['crowded'] = '19'
+        this.searchResult['date'] = '9/19/20'
+        this.searchResult['time'] = 'Early morning'
+        this.searchResult['comments'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eleifend aliquam quam non placerat. Pellentesque sodales vulputate urna sit amet molestie. Proin bibendum posuere ligula id laoreet. Donec pretium eros ut arcu porttitor fermentum. Nam congue neque at justo blandit suscipit. Nam tempus eu erat non faucibus. Donec mauris enim, faucibus id maximus a, tempus id turpis. Suspendisse bibendum ex eu sapien vulputate venenatis in at felis. Fusce hendrerit lorem eget imperdiet gravida. Suspendisse cursus malesuada tortor sodales vulputate. Nullam facilisis eros et libero mollis interdum."
+
+        //gen fake array
+        this.searchResults = []
+        for (let i = 0; i < 10; i++) {
+            this.searchResults.push(this.searchResult);
+        }
+
         this.state = {
             departure: 'any',
             arrival: 'any',
             dayOfWeek: 'any',
             time: 'any',
             airline: 'any',
+            searchResults: this.searchResults,
         }
 
         this.result = React.createRef();
@@ -51,7 +69,8 @@ class Search extends React.Component {
                 arrival={this.state.arrival}
                 dayOfWeek={this.state.dayOfWeek}
                 time={this.state.time}
-                airline={this.state.airline}        
+                airline={this.state.airline} 
+                searchResults={this.state.searchResults}       
             />
         )
     }
@@ -126,24 +145,8 @@ class Search extends React.Component {
 class SearchContainer extends React.Component {
     constructor(props) {
         super(props);
-        //fake map
-        this.searchResult = new Map()
-        this.searchResult['airline'] = 'delta'
-        this.searchResult['arrival'] = 'nyc'
-        this.searchResult['departure'] = 'boston'
-        this.searchResult['safety'] = '68'
-        this.searchResult['crowded'] = '19'
-        this.searchResult['date'] = '9/19/20'
-        this.searchResult['time'] = 'Early morning'
-        this.searchResult['comments'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eleifend aliquam quam non placerat. Pellentesque sodales vulputate urna sit amet molestie. Proin bibendum posuere ligula id laoreet. Donec pretium eros ut arcu porttitor fermentum. Nam congue neque at justo blandit suscipit. Nam tempus eu erat non faucibus. Donec mauris enim, faucibus id maximus a, tempus id turpis. Suspendisse bibendum ex eu sapien vulputate venenatis in at felis. Fusce hendrerit lorem eget imperdiet gravida. Suspendisse cursus malesuada tortor sodales vulputate. Nullam facilisis eros et libero mollis interdum."
-
-        //gen fake array
-        this.searchResults = []
-        for (let i = 0; i < 10; i++) {
-            this.searchResults.push(this.searchResult);
-        }
+        
         this.state = {
-            searchResults: this.searchResults,
             avgCrowded: 0,
             avgSafety: 0,
         }
@@ -154,7 +157,7 @@ class SearchContainer extends React.Component {
             <div className='body'>
                 <Row>
                     <Col>
-                        {this.state.searchResults.map((result, index) => (
+                        {this.props.searchResults.map((result, index) => (
                             <SearchResult
                                 key = {index}
                                 airline = {result.airline}
