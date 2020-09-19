@@ -21,6 +21,7 @@ code {
 .App {
   background-color: var(--main-purple-color);
   color: var(--primary-text-color); 
+  min-height:100vh;
 }
 
 .body {
