@@ -39,9 +39,34 @@ def read():
         read() : Fetches forms from Realtime DB in JSON
     """
     try:
-        forms = ref.get()
+        print(f'request received with arguments {request.args}')
+        firebase_result = ref.get()
+        query = json.loads(request.args.get('query'))
+        forms = firebase_result.values()
         print(f'forms received from firebase {forms}')
-        return jsonify(forms), 200
+        queried_forms = query_forms(forms, query)
+        print(f'queried forms {queried}')
+        return jsonify(queried), 200
     except Exception as e:
+        print(f"An Error Occured: {e}")
         return f"An Error Occured: {e}"
+
+
+def query_forms(forms, query):
+    """
+        query_forms(forms, query) : queries form based on the query parameters
+        forms : list of form objects, where a form is a dictionary mapping string to string
+        query : a dictionary mapping string to string or "any" if it the query parameter is over all values
+    """
+    queried_forms = forms
+    for query_param in query:
+        query_value = query[query_param]
+        if query_value == "any": continue
+        queried_forms = [form for form in queried_forms if form[query_param] == query_value]
+    return queried_forms
+
+
+
+
+            
 
