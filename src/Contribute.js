@@ -19,7 +19,7 @@ class Contribute extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         // require departure, arrival, date, time, airline
         // possibly require crowded and safety?
         // don't require comments
@@ -30,6 +30,19 @@ class Contribute extends React.Component {
                 + " at " + this.safety.current.value + " safety and " + this.crowded.current.value + " crowded"
                 + this.comments.current.value);
         // actually need to save to database
+        const form_data = new Map();
+        form_data["departure"] = this.departure.current.value;
+        form_data["arrival"] = this.arrival.current.value;
+        form_data["data"] = this.arrival.current.value;
+        form_data["time"] = this.time.current.value;
+        form_data["airline"] = this.airline.current.value;
+        form_data["safety"] = this.safety.current.value;
+        form_data["crowded"] = this.crowded.current.value;
+        const json_param = new Map();
+        json_param["json"] = form_data;
+        console.log(JSON.stringify(json_param));
+        await fetch('/add?' + + new URLSearchParams(json_param), { method: 'POST'})
+        .then(response => response.json()).then(data => console.log(data));
     }
 
     render() {
