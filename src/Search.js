@@ -55,7 +55,7 @@ class Search extends React.Component {
         });
     }
 
-    renderSearchContainer(){
+    async renderSearchContainer(){
         //only render if none in state aren't empty
         const results = Object.assign({}, this.state);
         for (const i in results) {
@@ -63,13 +63,31 @@ class Search extends React.Component {
                 return null;
             }
         }
+
+        const queryData = new Map();
+        queryData["departure"] = this.departure.current.value != "" ? this.departure.current.value : "any";
+        queryData["arrival"] = this.arrival.current.value;
+        queryData["date"] = this.date.current.value;
+        queryData["time"] = this.time.current.value;
+        queryData["airline"] = this.airline.current.value;
+
+        //const queryParam = "query=" + JSON.stringify queryData);
+        console.log(`json data being passed to api ${jsonParam}`);
+        await fetch('/add?' + jsonParam, { method: 'POST'})
+        .then(response => response.json()).then(data => console.log(data));
+        // return(
+        //     <SearchContainer
+        //         departure={this.state.departure}
+        //         arrival={this.state.arrival}
+        //         dayOfWeek={this.state.dayOfWeek}
+        //         time={this.state.time}
+        //         airline={this.state.airline} 
+        //         searchResults={this.state.searchResults}       
+        //     />
+        // )
+
         return(
             <SearchContainer
-                departure={this.state.departure}
-                arrival={this.state.arrival}
-                dayOfWeek={this.state.dayOfWeek}
-                time={this.state.time}
-                airline={this.state.airline} 
                 searchResults={this.state.searchResults}       
             />
         )
