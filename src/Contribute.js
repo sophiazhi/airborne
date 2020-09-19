@@ -138,7 +138,7 @@ class Contribute extends React.Component {
                 </Form.Group>
                 
                 {(this.state.error !== '') ? <Alert variant="danger">{this.state.error}</Alert> : null}
-                <Button onClick={this.handleSubmit}>Submit</Button>
+                <Button className="mb-5" onClick={this.handleSubmit}>Submit</Button>
             </Form>
         )
     }
