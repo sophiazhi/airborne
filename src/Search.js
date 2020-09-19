@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Card from 'react-bootstrap/Card';
 
 class Search extends React.Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class Search extends React.Component {
 
         this.result = React.createRef();
         this.handleSubmit = this.handleSubmit.bind(this);
-        
+        this.renderSearchContainer = this.renderSearchContainer.bind(this);
     }
 
     handleSubmit() {
@@ -159,7 +160,22 @@ class SearchContainer extends React.Component {
 }
 
 class SearchResult extends React.Component {
-    
+    render() {
+        const title = this.props.airline + " from " + this.props.departure + " to " + this.props.arrival;
+        const subtitle = this.props.time + " flight on " + this.props.date;
+        const crowdedness = "Crowdedness: " + this.props.crowded + "/100\n";
+        const easeOfMind =  "Ease of mind: " + this.props.safety + "/100\n";
+        const extraComments = "Comments: " + this.props.comments;
+        return (
+            <Card>
+                <Card.Title>{title}</Card.Title>
+                <Card.Subtitle>{subtitle}</Card.Subtitle>
+                <Card.Text>{crowdedness}</Card.Text>
+                <Card.Text>{easeOfMind}</Card.Text>
+                <Card.Text>{extraComments}</Card.Text>
+            </Card>
+        );
+    }
 }
 
 export default Search;

@@ -39,7 +39,7 @@ class Contribute extends React.Component {
         const form_data = new Map();
         form_data["departure"] = this.departure.current.value;
         form_data["arrival"] = this.arrival.current.value;
-        form_data["data"] = this.arrival.current.value;
+        form_data["date"] = this.date.current.value;
         form_data["time"] = this.time.current.value;
         form_data["airline"] = this.airline.current.value;
         form_data["safety"] = this.safety.current.value;
@@ -49,20 +49,18 @@ class Contribute extends React.Component {
         const missing = this.missingFields();
         if (missing.length === 0) {
             this.setState({"error": ''});
+            // alert for testing
             alert(JSON.stringify(form_data));
+            // actual save to database
+            const json_param = "json=" + JSON.stringify(form_data);
+            console.log(`json data being passed to api ${json_param}`);
+            await fetch('/add?' + json_param, { method: 'POST'})
+            .then(response => response.json()).then(data => console.log(data));
         } else {
             let missingFields = "";
             missing.forEach((field, i) => missingFields += field + ((i===missing.length-1) ? '.' : ', '));
             this.setState({"error": "Missing fields " + missingFields});
         }
-
-        // actually need to save to database
-        
-        const json_param = "json=" + JSON.stringify(form_data);
-        console.log(`json data being passed to api ${json_param}`);
-        await fetch('/add?' + json_param, { method: 'POST'})
-        .then(response => response.json()).then(data => console.log(data));
-            // actually need to save to database
         
     }
 
