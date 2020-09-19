@@ -16,8 +16,11 @@ code {
   margin: 10%;
 }
 
-.searchbar {
-  margin-top: 2%;
-  margin-left: 4%;
-  margin-right: 4%;
+.searchbar-container {
+  margin-top: 3%;
+  margin-left: 5%;
+  margin-right: 5%;
+  flex-wrap: wrap;
 }
+
+@media screen and (max-width: 768px) { .searchbar {flex-direction: column;} }

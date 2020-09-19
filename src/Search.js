@@ -12,18 +12,29 @@ class Search extends React.Component {
         this.time = React.createRef();
         this.airline = React.createRef();
 
-        /*
+        
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        /*
         this.state = {
             time: "api isn't called"
         }
         */
     }
+
+    handleSubmit(event) {
+        // require departure, arrival, date, time, airline
+        // possibly require crowded and safety?
+        // don't require comments
+        alert('test submitted ' + this.departure.current.value 
+                + " to " + this.arrival.current.value
+                + " on " + this.dayOfWeek.current.value + ", " + this.time.current.value
+                + " with " + this.airline.current.value);
+        // actually need to save to database
+    }
     render() {
         return (
-            <Form className="searchbar">
-                <Form.Row>
+            <Form className="searchbar-container" >
+                <Form.Row className="searchbar d-flex justify-content-center">
                     <Col>
                         <Form.Group controlId="formAirline">
                             <Form.Control ref={this.airline} type="text" placeholder="Airline"/>
@@ -67,7 +78,11 @@ class Search extends React.Component {
                             </Form.Control>
                         </Form.Group>
                     </Col>
+                    <Col className="col-sm-1">
+                        <Button onClick={this.handleSubmit}>Search</Button>
+                    </Col>
                 </Form.Row>
+                
             </Form>
         )
     }
