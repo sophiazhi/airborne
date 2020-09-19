@@ -1,8 +1,8 @@
 import React from 'react';
-//import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import Alert from 'react-bootstrap/Alert';
 
 class Contribute extends React.Component {
     constructor(props) {
@@ -15,21 +15,55 @@ class Contribute extends React.Component {
         this.crowded = React.createRef();
         this.safety = React.createRef();
         this.comments = React.createRef();
+        this.state = {"error": ''};
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(event) {
+    missingFields() {
         // require departure, arrival, date, time, airline
         // possibly require crowded and safety?
         // don't require comments
-        alert('test submitted ' + this.departure.current.value 
-                + " to " + this.arrival.current.value
-                + " on " + this.date.current.value + ", " + this.time.current.value
-                + " with " + this.airline.current.value
-                + " at " + this.safety.current.value + " safety and " + this.crowded.current.value + " crowded"
-                + this.comments.current.value);
+        
+        const missing = [];
+        // very sad manual checking :'(
+        if (this.departure.current.value === '') missing.push("departure");
+        if (this.arrival.current.value === '') missing.push("arrival");
+        if (this.date.current.value === '') missing.push("date");
+        if (this.time.current.value === '') missing.push("time");
+        if (this.airline.current.value === '') missing.push("airline");
+        return missing;
+    }
+
+    async handleSubmit(event) {
+        const form_data = new Map();
+        form_data["departure"] = this.departure.current.value;
+        form_data["arrival"] = this.arrival.current.value;
+        form_data["data"] = this.arrival.current.value;
+        form_data["time"] = this.time.current.value;
+        form_data["airline"] = this.airline.current.value;
+        form_data["safety"] = this.safety.current.value;
+        form_data["crowded"] = this.crowded.current.value;
+        form_data["comments"] = this.comments.current.value;
+
+        const missing = this.missingFields();
+        if (missing.length === 0) {
+            this.setState({"error": ''});
+            alert(JSON.stringify(form_data));
+        } else {
+            let missingFields = "";
+            missing.forEach((field, i) => missingFields += field + ((i===missing.length-1) ? '.' : ', '));
+            this.setState({"error": "Missing fields " + missingFields});
+        }
+
         // actually need to save to database
+        
+        const json_param = "json=" + JSON.stringify(form_data);
+        console.log(`json data being passed to api ${json_param}`);
+        await fetch('/add?' + json_param, { method: 'POST'})
+        .then(response => response.json()).then(data => console.log(data));
+            // actually need to save to database
+        
     }
 
     render() {
@@ -78,6 +112,7 @@ class Contribute extends React.Component {
                     <Form.Label>Airline</Form.Label>
                     <Form.Control ref={this.airline} type="text" placeholder="Company"/>
                 </Form.Group>
+                <hr></hr>
                 <Form.Row>
                     <Col>No other passengers in sight</Col>
                     <Col xs={8}>
@@ -104,7 +139,7 @@ class Contribute extends React.Component {
                     <Form.Control ref={this.comments} type="text" placeholder="Thoughts" />
                 </Form.Group>
                 
-                
+                {(this.state.error !== '') ? <Alert variant="danger">{this.state.error}</Alert> : null}
                 <Button onClick={this.handleSubmit}>Submit</Button>
             </Form>
         )

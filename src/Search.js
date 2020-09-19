@@ -56,7 +56,7 @@ class Search extends React.Component {
     render() {
         return (
             <div>
-                <Form className="searchbar-container" >
+                <Form className="searchbar-container" className="body" >
                     <Form.Row className="searchbar d-flex text-left">
                         <Col>
                             <Form.Group controlId="formAirline">
