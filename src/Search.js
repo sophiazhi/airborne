@@ -2,6 +2,7 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 class Search extends React.Component {
     constructor(props) {
@@ -12,16 +13,13 @@ class Search extends React.Component {
         this.time = React.createRef();
         this.airline = React.createRef();
 
-
         this.state = {
-            departure: '',
-            arrival: '',
-            dayOfWeek: '',
-            time: '',
-            airline: '',
+            departure: 'any',
+            arrival: 'any',
+            dayOfWeek: 'any',
+            time: 'any',
+            airline: 'any',
         }
-
-
 
         this.result = React.createRef();
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,7 +37,8 @@ class Search extends React.Component {
         });
     }
 
-    renderSearchResult(){
+    renderSearchContainer(){
+        //only render if none in state aren't empty
         const results = Object.assign({}, this.state);
         for (const i in results) {
             if (results[i] == '') {
@@ -47,8 +46,12 @@ class Search extends React.Component {
             }
         }
         return(
-            <SearchResult departure={this.state.departure}
-                          
+            <SearchContainer
+                departure={this.state.departure}
+                arrival={this.state.arrival}
+                dayOfWeek={this.state.dayOfWeek}
+                time={this.state.time}
+                airline={this.state.airline}        
             />
         )
     }
@@ -111,25 +114,35 @@ class Search extends React.Component {
                         </Col>
                     </Form.Row>
                 </Form>
-                {this.renderSearchResult()}
+                {this.renderSearchContainer()}
             </div>
         )
     }
-    
 }
 
-class SearchResult extends React.Component {
-    constructor() {
-        this.comments = []
-        this.crowded = 0
-        this.safety = 0
+
+
+class SearchContainer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.searchResults = []
+        this.avgCrowded = 0
+        this.avgSafety = 0
     }
+
+    
+
     render() {
         return (
             <div>
-                <p>{this.props.departure}</p>
             </div>
         )
+    }
+}
+
+class SearchResult extends React.Component {
+    render() {
+
     }
 }
 
