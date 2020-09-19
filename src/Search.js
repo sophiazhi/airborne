@@ -118,7 +118,6 @@ class Search extends React.Component {
     
 }
 
-
 class SearchResult extends React.Component {
     constructor() {
         this.comments = []
