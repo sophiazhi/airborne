@@ -182,7 +182,7 @@ class SearchResult extends React.Component {
         const easeOfMind =  "Ease of mind: " + this.props.safety + "/100\n";
         const extraComments = "Comments: " + this.props.comments;
         return (
-            <Card>
+            <Card style={{"background-color": "#f2edf8"}}>
                 <Card.Title>{title}</Card.Title>
                 <Card.Subtitle>{subtitle}</Card.Subtitle>
                 <Card.Text>{crowdedness}</Card.Text>
