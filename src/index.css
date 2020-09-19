@@ -15,3 +15,12 @@ code {
 .body {
   margin: 10%;
 }
+
+.searchbar-container {
+  margin-top: 3%;
+  margin-left: 5%;
+  margin-right: 5%;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 768px) { .searchbar {flex-direction: column;} }
