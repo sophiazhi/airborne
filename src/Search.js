@@ -11,8 +11,6 @@ class Search extends React.Component {
         this.dayOfWeek = React.createRef();
         this.time = React.createRef();
         this.airline = React.createRef();
-
-        
         this.handleSubmit = this.handleSubmit.bind(this);
         /*
         this.state = {
@@ -31,59 +29,78 @@ class Search extends React.Component {
                 + " with " + this.airline.current.value);
         // actually need to save to database
     }
+
+    /*
+    renderSearchResult() {
+        return <SearchResult
+                    departure = {this.departure}
+                    arrival = {this.arrival}
+                    dayOfWeek = {this.dayOfWeek}
+                    time = {this.time}
+                    airline = {this.airline}
+               />
+    }
+    */
+
     render() {
         return (
-            <Form /*className="searchbar-container"*/ className="body" >
-                <Form.Row className="searchbar d-flex justify-content-center">
-                    <Col>
-                        <Form.Group controlId="formAirline">
-                            <Form.Control ref={this.airline} type="text" placeholder="Airline"/>
-                        </Form.Group>
-                    </Col>
-                    <Col>
-                        <Form.Group controlId="formDeparture">
-                            <Form.Control ref={this.departure} type="text" placeholder="Departure"/>
-                        </Form.Group>
-                    </Col>
-                    <Col>
-                        <Form.Group controlId="formArrival">
-                            <Form.Control ref={this.arrival} type="text" placeholder="Arrival"/>
-                        </Form.Group>
-                    </Col>
-                    <Col>
-                        <Form.Group controlId="formDayOfWeek">
-                            <Form.Control ref={this.dayOfWeek} as="select" defaultValue="Day of Week">
-                                <option>Day of Week</option>
-                                <option>Monday</option>
-                                <option>Tuesday</option>
-                                <option>Wednesday</option>
-                                <option>Thursday</option>
-                                <option>Friday</option>
-                                <option>Saturday</option>
-                                <option>Sunday</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Col>
-                    
-                    <Col>
-                        <Form.Group controlId="formTime">
-                            <Form.Control ref={this.time} as="select" defaultValue="Time">
-                                <option>Time</option>
-                                <option>2:00 AM - 5:59 AM</option>
-                                <option>6:00 AM - 9:59 AM</option>
-                                <option>10:00 AM - 1:59 PM</option>
-                                <option>2:00 PM - 5:59 PM</option>
-                                <option>6:00 PM - 9:59 PM</option>
-                                <option>10:00 PM - 1:59 AM</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Col>
-                    <Col className="col-sm-1">
-                        <Button onClick={this.handleSubmit}>Search</Button>
-                    </Col>
-                </Form.Row>
-                
-            </Form>
+            <div>
+                <Form className="searchbar-container" className="body" >
+                    <Form.Row className="searchbar d-flex text-left">
+                        <Col>
+                            <Form.Group controlId="formAirline">
+                                <Form.Label className="">Airline:</Form.Label>
+                                <Form.Control ref={this.airline} type="text" placeholder="Airline"/>
+                            </Form.Group>
+                        </Col>
+                        <Col>
+                            <Form.Group controlId="formDeparture">
+                                <Form.Label>Departure:</Form.Label>
+                                <Form.Control ref={this.departure} type="text" placeholder="Departure"/>
+                            </Form.Group>
+                        </Col>
+                        <Col>
+                            <Form.Group controlId="formArrival">
+                                <Form.Label>Arrival:</Form.Label>
+                                <Form.Control ref={this.arrival} type="text" placeholder="Arrival"/>
+                            </Form.Group>
+                        </Col>
+                        <Col>
+                            <Form.Group controlId="formDayOfWeek">
+                                <Form.Label>Day of the week:</Form.Label>
+                                <Form.Control ref={this.dayOfWeek} as="select" defaultValue="Day of Week">
+                                    <option>Any</option>
+                                    <option>Monday</option>
+                                    <option>Tuesday</option>
+                                    <option>Wednesday</option>
+                                    <option>Thursday</option>
+                                    <option>Friday</option>
+                                    <option>Saturday</option>
+                                    <option>Sunday</option>
+                                </Form.Control>
+                            </Form.Group>
+                        </Col>
+                        
+                        <Col>
+                            <Form.Group controlId="formTime">
+                                <Form.Label>Time of day:</Form.Label>
+                                <Form.Control ref={this.time} as="select" defaultValue="Time">
+                                    <option>Any</option>
+                                    <option>2:00 AM - 5:59 AM</option>
+                                    <option>6:00 AM - 9:59 AM</option>
+                                    <option>10:00 AM - 1:59 PM</option>
+                                    <option>2:00 PM - 5:59 PM</option>
+                                    <option>6:00 PM - 9:59 PM</option>
+                                    <option>10:00 PM - 1:59 AM</option>
+                                </Form.Control>
+                            </Form.Group>
+                        </Col>
+                        <Col className="col-sm-1 align-to-end">
+                            <Button className="group-margin" onClick={this.handleSubmit}>Search</Button>
+                        </Col>
+                    </Form.Row>
+                </Form>
+            </div>
         )
     }
     /*

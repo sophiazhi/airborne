@@ -25,3 +25,12 @@ code {
 }
 
 @media screen and (max-width: 768px) { .searchbar {flex-direction: column;} }
+
+.align-to-end {
+  display: flex;
+  align-items: flex-end;
+}
+
+.group-margin {
+  margin-bottom: 1rem;
+}
