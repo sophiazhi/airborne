@@ -30,6 +30,7 @@ class Search extends React.Component {
         // actually need to save to database
     }
 
+    /*
     renderSearchResult() {
         return <SearchResult
                     departure = {this.departure}
@@ -39,7 +40,8 @@ class Search extends React.Component {
                     airline = {this.airline}
                />
     }
-
+    */
+   
     render() {
         return (
             <div>
