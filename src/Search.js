@@ -2,6 +2,7 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 class Search extends React.Component {
     constructor(props) {
@@ -12,7 +13,6 @@ class Search extends React.Component {
         this.time = React.createRef();
         this.airline = React.createRef();
 
-
         this.state = {
             departure: '',
             arrival: '',
@@ -20,8 +20,6 @@ class Search extends React.Component {
             time: '',
             airline: '',
         }
-
-
 
         this.result = React.createRef();
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,6 +38,7 @@ class Search extends React.Component {
     }
 
     renderSearchResult(){
+        //only render if none in state aren't empty
         const results = Object.assign({}, this.state);
         for (const i in results) {
             if (results[i] == '') {
@@ -47,8 +46,12 @@ class Search extends React.Component {
             }
         }
         return(
-            <SearchResult departure={this.state.departure}
-                          
+            <SearchResult 
+                departure={this.state.departure}
+                arrival={this.state.arrival}
+                dayOfWeek={this.state.dayOfWeek}
+                time={this.state.time}
+                airline={this.state.airline}        
             />
         )
     }
@@ -115,7 +118,6 @@ class Search extends React.Component {
             </div>
         )
     }
-    
 }
 
 
@@ -129,7 +131,14 @@ class SearchResult extends React.Component {
     render() {
         return (
             <div>
-                <p>{this.props.departure}</p>
+                <Row>
+                    <Col>
+                        <h1>{this.props.airline}</h1>
+                        <h3>Departure: {this.props.departure}</h3>
+                        <h3>Arrival: {this.props.arrival}</h3>
+                    </Col>
+                </Row>
+
             </div>
         )
     }
