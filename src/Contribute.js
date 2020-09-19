@@ -1,8 +1,8 @@
 import React from 'react';
-//import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import Alert from 'react-bootstrap/Alert';
 
 class Contribute extends React.Component {
     constructor(props) {
@@ -15,20 +15,42 @@ class Contribute extends React.Component {
         this.crowded = React.createRef();
         this.safety = React.createRef();
         this.comments = React.createRef();
+        this.state = {"error": ''};
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    async handleSubmit(event) {
+    missingFields() {
         // require departure, arrival, date, time, airline
         // possibly require crowded and safety?
         // don't require comments
-        alert('test submitted ' + this.departure.current.value 
+        
+        const missing = [];
+        // very sad manual checking :'(
+        if (this.departure.current.value === '') missing.push("departure");
+        if (this.arrival.current.value === '') missing.push("arrival");
+        if (this.date.current.value === '') missing.push("date");
+        if (this.time.current.value === '') missing.push("time");
+        if (this.airline.current.value === '') missing.push("airline");
+        return missing;
+    }
+
+    async handleSubmit(event) {
+        const missing = this.missingFields();
+        if (missing.length === 0) {
+            this.setState({"error": ''});
+            alert('test submitted ' + this.departure.current.value 
                 + " to " + this.arrival.current.value
                 + " on " + this.date.current.value + ", " + this.time.current.value
                 + " with " + this.airline.current.value
                 + " at " + this.safety.current.value + " safety and " + this.crowded.current.value + " crowded"
                 + this.comments.current.value);
+        } else {
+            let missingFields = "";
+            missing.forEach((field, i) => missingFields += field + ((i===missing.length-1) ? '.' : ', '));
+            this.setState({"error": "Missing fields " + missingFields});
+        }
+
         // actually need to save to database
         const form_data = new Map();
         form_data["departure"] = this.departure.current.value;
@@ -43,6 +65,8 @@ class Contribute extends React.Component {
         console.log(JSON.stringify(json_param));
         await fetch('/add?' + + new URLSearchParams(json_param), { method: 'POST'})
         .then(response => response.json()).then(data => console.log(data));
+            // actually need to save to database
+        
     }
 
     render() {
@@ -91,6 +115,7 @@ class Contribute extends React.Component {
                     <Form.Label>Airline</Form.Label>
                     <Form.Control ref={this.airline} type="text" placeholder="Company"/>
                 </Form.Group>
+                <hr></hr>
                 <Form.Row>
                     <Col>No other passengers in sight</Col>
                     <Col xs={8}>
@@ -117,7 +142,7 @@ class Contribute extends React.Component {
                     <Form.Control ref={this.comments} type="text" placeholder="Thoughts" />
                 </Form.Group>
                 
-                
+                {(this.state.error !== '') ? <Alert variant="danger">{this.state.error}</Alert> : null}
                 <Button onClick={this.handleSubmit}>Submit</Button>
             </Form>
         )
