@@ -36,22 +36,6 @@ class Contribute extends React.Component {
     }
 
     async handleSubmit(event) {
-        const missing = this.missingFields();
-        if (missing.length === 0) {
-            this.setState({"error": ''});
-            alert('test submitted ' + this.departure.current.value 
-                + " to " + this.arrival.current.value
-                + " on " + this.date.current.value + ", " + this.time.current.value
-                + " with " + this.airline.current.value
-                + " at " + this.safety.current.value + " safety and " + this.crowded.current.value + " crowded"
-                + this.comments.current.value);
-        } else {
-            let missingFields = "";
-            missing.forEach((field, i) => missingFields += field + ((i===missing.length-1) ? '.' : ', '));
-            this.setState({"error": "Missing fields " + missingFields});
-        }
-
-        // actually need to save to database
         const form_data = new Map();
         form_data["departure"] = this.departure.current.value;
         form_data["arrival"] = this.arrival.current.value;
@@ -60,10 +44,23 @@ class Contribute extends React.Component {
         form_data["airline"] = this.airline.current.value;
         form_data["safety"] = this.safety.current.value;
         form_data["crowded"] = this.crowded.current.value;
-        const json_param = new Map();
-        json_param["json"] = form_data;
-        console.log(JSON.stringify(json_param));
-        await fetch('/add?' + + new URLSearchParams(json_param), { method: 'POST'})
+        form_data["comments"] = this.comments.current.value;
+
+        const missing = this.missingFields();
+        if (missing.length === 0) {
+            this.setState({"error": ''});
+            alert(JSON.stringify(form_data));
+        } else {
+            let missingFields = "";
+            missing.forEach((field, i) => missingFields += field + ((i===missing.length-1) ? '.' : ', '));
+            this.setState({"error": "Missing fields " + missingFields});
+        }
+
+        // actually need to save to database
+        
+        const json_param = "json=" + JSON.stringify(form_data);
+        console.log(`json data being passed to api ${json_param}`);
+        await fetch('/add?' + json_param, { method: 'POST'})
         .then(response => response.json()).then(data => console.log(data));
             // actually need to save to database
         
