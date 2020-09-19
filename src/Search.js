@@ -33,7 +33,7 @@ class Search extends React.Component {
     }
     render() {
         return (
-            <Form className="searchbar-container" >
+            <Form /*className="searchbar-container"*/ className="body" >
                 <Form.Row className="searchbar d-flex justify-content-center">
                     <Col>
                         <Form.Group controlId="formAirline">

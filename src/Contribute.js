@@ -1,5 +1,4 @@
 import React from 'react';
-//import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -101,6 +100,7 @@ class Contribute extends React.Component {
                     <Form.Label>Airline</Form.Label>
                     <Form.Control ref={this.airline} type="text" placeholder="Company"/>
                 </Form.Group>
+                <hr></hr>
                 <Form.Row>
                     <Col>No other passengers in sight</Col>
                     <Col xs={8}>
