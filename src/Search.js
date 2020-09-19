@@ -151,7 +151,7 @@ class SearchContainer extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className='body'>
                 <Row>
                     <Col>
                         {this.state.searchResults.map((result, index) => (
