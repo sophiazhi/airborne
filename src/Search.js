@@ -185,12 +185,16 @@ class SearchResult extends React.Component {
         const easeOfMind =  "Ease of mind: " + this.props.safety + "/100\n";
         const extraComments = "Comments: " + this.props.comments;
         return (
-            <Card>
-                <Card.Title>{title}</Card.Title>
-                <Card.Subtitle>{subtitle}</Card.Subtitle>
-                <Card.Text>{crowdedness}</Card.Text>
-                <Card.Text>{easeOfMind}</Card.Text>
-                <Card.Text>{extraComments}</Card.Text>
+            <Card className="mt-2 mb-2">
+                <Card.Header className="pt-4">
+                    <Card.Title>{title}</Card.Title>
+                </Card.Header>
+                <Card.Body className="pt-4">
+                    <Card.Subtitle className="pb-3" >{subtitle}</Card.Subtitle>
+                    <Card.Text>{crowdedness}</Card.Text>
+                    <Card.Text className="pb-3">{easeOfMind}</Card.Text>
+                    <Card.Text>{extraComments}</Card.Text>
+                </Card.Body>
             </Card>
         );
     }
