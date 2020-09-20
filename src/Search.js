@@ -151,9 +151,9 @@ class SearchContainer extends React.Component {
 
         return (
             <div className='body pb-5'>
-                <h3>Average Crowdedness:</h3>
+                <h3>Average Emptiness:</h3>
                 <ProgressBar className={'mb-4 ' + crowdPoints} now={avgCrowd} />
-                <h3>Average Safety:</h3>
+                <h3>Average Ease of Mind:</h3>
                 <ProgressBar className={'mb-4 ' + easeOfMindPoints} now={avgEaseOfMind} />
                 {this.props.searchResults.map((result, index) => (
                     <SearchResult
@@ -178,8 +178,8 @@ class SearchResult extends React.Component {
     render() {
         const title = this.props.airline + " from " + this.props.departure + " to " + this.props.arrival;
         const subtitle = this.props.time + " flight on " + this.props.date;
-        const crowdedness = "Crowdedness: ";
-        const safety =  "Safety: ";
+        const crowdedness = "Emptiness: ";
+        const safety =  "Ease of Mind: ";
         const extraComments = "Comments: " + this.props.comments;
         const backgroundColor = this.props.dateQuery === "sameWeekday" ? "#f2fafe" : "#f2edf8";
         const crowdPoints = this.props.crowded < 25 ? "low" : (this.props.crowded < 75 ? "medium" : "high");

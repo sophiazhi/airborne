@@ -112,14 +112,14 @@ class Contribute extends React.Component {
                 </Form.Group>
                 <hr></hr>
                 <Form.Row>
-                    <Col>No other passengers in sight</Col>
+                    <Col>Every seat was filled</Col>
                     <Col xs={8}>
                         <Form.Group controlId="formCrowded">
-                            <Form.Label>How full was the flight?</Form.Label>
+                            <Form.Label>How empty was the flight?</Form.Label>
                             <Form.Control ref={this.crowded} type="range" custom />
                         </Form.Group>
                     </Col>
-                    <Col>Every seat was filled</Col>
+                    <Col>No other passengers in sight</Col>
                 </Form.Row>
                 <Form.Row>
                     <Col>If someone had coronavirus I definitely contracted it</Col>
