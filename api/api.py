@@ -45,7 +45,11 @@ def read():
         query = json.loads(request.args.get('query'))
         forms = firebase_result.values()
         print(f'forms received from firebase {forms}')
-        queried_forms = {"queried_forms": list(query_forms(forms, query))}
+        if (query["date"].lower() == "" or query["date"].lower() == "any"): 
+            queried_forms = {"queried_forms": list(query_forms(forms, query))}
+        else:
+            date_forms, dow_forms = query_forms_with_date(forms, query)
+            queried_forms = {"close_date_forms": list(date_forms), "same_weekday_forms": list(dow_forms)}
         print(f'queried forms {queried_forms}')
         return jsonify(queried_forms), 200
     except Exception as e:
@@ -59,18 +63,40 @@ def query_forms(forms, query):
         forms : list of form objects, where a form is a dictionary mapping string to string
         query : a dictionary mapping string to string or "any" if it the query parameter is over all values
     """
-    day_of_week = {"monday":0,"tuesday":1,"wednesday":2,"thursday":3,"friday":4,"saturday":5,"sunday":6}
-    # edit this to include dates that share a day of the week or are within one month of the date specified
     queried_forms = forms
     for query_param in query:
         query_value = query[query_param].lower()
         if query_value == "any": continue
-        if query_param == "date":
-            queried_forms = [form for form in queried_forms if date.fromisoformat(form[query_param]).weekday() == day_of_week[query_value]]
-            continue
+        if query_param == "date": continue
         queried_forms = [form for form in queried_forms if form[query_param].lower() == query_value]
     return queried_forms
 
+def query_forms_with_date(forms, query):
+    """
+        query_forms(forms, query) : queries form based on the query parameters
+        forms : list of form objects, where a form is a dictionary mapping string to string
+        query : a dictionary mapping string to string or "any" if it the query parameter is over all values
+    """
+    queried_forms = forms
+    for query_param in query:
+        query_value = query[query_param].lower()
+        if query_value == "any": continue
+        if query_param == "date": continue
+        queried_forms = [form for form in queried_forms if form[query_param].lower() == query_value]
+
+    date_forms = []
+    dow_forms = []
+    for form in queried_forms:
+        query_date = date.fromisoformat(query["date"])
+        query_day_of_week = query_date.weekday()
+        form_date = date.fromisoformat(form["date"])
+        form_day_of_week = form_date.weekday()
+
+        if abs((query_date - form_date).days) < 7:
+            date_forms.append(form)
+        elif query_day_of_week == form_day_of_week:
+            dow_forms.append(form)
+    return (date_forms, dow_forms)
 
 
 
