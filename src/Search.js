@@ -27,7 +27,7 @@ class Search extends React.Component {
 
         //gen fake array
         this.searchResults = []
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 11; i++) {
             this.searchResults.push(this.searchResult);
         }
 
@@ -55,7 +55,7 @@ class Search extends React.Component {
         });
     }
 
-    async renderSearchContainer(){
+    /*async*/ renderSearchContainer(){
         //only render if none in state aren't empty
         const results = Object.assign({}, this.state);
         for (const i in results) {
@@ -63,7 +63,7 @@ class Search extends React.Component {
                 return null;
             }
         }
-
+        /*
         const queryData = new Map();
         queryData["departure"] = this.departure.current.value != "" ? this.departure.current.value : "any";
         queryData["arrival"] = this.arrival.current.value;
@@ -75,6 +75,7 @@ class Search extends React.Component {
         console.log(`json data being passed to api ${jsonParam}`);
         await fetch('/add?' + jsonParam, { method: 'POST'})
         .then(response => response.json()).then(data => console.log(data));
+        */
         // return(
         //     <SearchContainer
         //         departure={this.state.departure}
@@ -174,7 +175,7 @@ class SearchContainer extends React.Component {
         return (
             <div className='body'>
                 <Row>
-                    <Col>
+                    <Col className="mb-5">
                         {this.props.searchResults.map((result, index) => (
                             <SearchResult
                                 key = {index}
