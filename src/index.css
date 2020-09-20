@@ -8,7 +8,7 @@
 }*/
 
 :root {
-  --main-purple-color:#660198; /*#c8b8db;*/
+  --main-purple-color: rgb(121, 122, 233); /*#c8b8db;*/
   --secondary-purple-color:#CCFE;
   --secondary-blue-color: #3066be;
   --primary-text-color: #3c3744;
@@ -91,8 +91,19 @@ code {
   border-color: var(--secondary-blue-color) !important;
 }
 
+.progress{
+  border-style: solid;
+  border-width: 1px;
+  border-color: #666;
+  margin-left: auto;
+  margin-right:auto;
+}
 .progress-bar{
   background-color: var(--main-purple-color) !important;
+}
+
+.progress-bar-card {
+  width: 35%
 }
 
 .custom-range::-webkit-slider-thumb {

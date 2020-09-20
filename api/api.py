@@ -99,6 +99,3 @@ def query_forms_with_date(forms, query):
     return (date_forms, dow_forms)
 
 
-
-            
-
