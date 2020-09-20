@@ -65,7 +65,7 @@ class Search extends React.Component {
                 return null;
             }
         }
-        /*
+        
         const queryData = new Map();
         queryData["departure"] = (this.state.departure !== "") ? this.state.departure : "any";
         queryData["arrival"] = (this.state.arrival !== "") ? this.state.arrival : "any";
@@ -81,7 +81,7 @@ class Search extends React.Component {
             'Accept': 'application/json'
            }})
         .then(response => response.json()).then(data => console.log(data));
-        */
+        
         return(
             <SearchContainer
                 searchResults={this.state.searchResults}       
