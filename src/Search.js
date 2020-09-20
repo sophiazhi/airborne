@@ -59,12 +59,14 @@ class Search extends React.Component {
 
     getSearchResults() {
         //only render if none in state aren't empty
+        /*
         const results = Object.assign({}, this.state);
         for (const i in results) {
             if (results[i] === '') {
                 return null;
             }
         }
+        */
         
         const queryData = new Map();
         queryData["departure"] = (this.state.departure !== "") ? this.state.departure : "any";
