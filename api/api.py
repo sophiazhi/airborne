@@ -60,9 +60,9 @@ def query_forms(forms, query):
     """
     queried_forms = forms
     for query_param in query:
-        query_value = query[query_param]
+        query_value = query[query_param].lower()
         if query_value == "any": continue
-        queried_forms = [form for form in queried_forms if form[query_param] == query_value]
+        queried_forms = [form for form in queried_forms if form[query_param].lower() == query_value]
     return queried_forms
 
 

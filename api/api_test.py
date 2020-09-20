@@ -32,6 +32,18 @@ class testApi(unittest.TestCase):
 
         self.assertEqual(actual, expected_form, "expected only nyc form")
     
+    def test__query_forms__one_field_specified(self):
+        query = {"airline": "any",
+        "departure": "NYc",
+        "time": "any"}
+
+        actual = query_forms(self.forms, query)
+        expected_form = [{"airline": "united",
+            "departure": "nyc",
+            "time": "morning"}]
+
+        self.assertEqual(actual, expected_form, "expected only nyc form")
+    
     def test__query_forms__all_forms_fail_query(self):
         query = {"airline": "any",
         "departure": "chicago",
