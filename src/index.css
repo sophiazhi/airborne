@@ -90,3 +90,18 @@ code {
   border-color: var(--secondary-blue-color) !important;
 }
 
+.progress-bar{
+  background-color: var(--main-purple-color) !important;
+}
+
+.custom-range::-webkit-slider-thumb {
+  background-color: var(--main-purple-color) !important;
+}
+
+.custom-range::-moz-range-thumb {
+  background-color: var(--main-purple-color) !important;
+}
+
+.custom-range::-ms-thumb {
+  background-color: var(--main-purple-color) !important;
+}
