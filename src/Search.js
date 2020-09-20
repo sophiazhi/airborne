@@ -12,7 +12,7 @@ class Search extends React.Component {
         super(props);
         this.departure = React.createRef();
         this.arrival = React.createRef();
-        this.dayOfWeek = React.createRef();
+        this.date = React.createRef();
         this.time = React.createRef();
         this.airline = React.createRef();
 
@@ -22,7 +22,7 @@ class Search extends React.Component {
         this.state = {
             departure: 'any',
             arrival: 'any',
-            dayOfWeek: 'any',
+            date: 'any',
             time: 'any',
             airline: 'any',
             searchResults: this.searchResults,
@@ -38,7 +38,7 @@ class Search extends React.Component {
         this.setState({
             departure: this.departure.current.value,
             arrival: this.arrival.current.value,
-            dayOfWeek: this.dayOfWeek.current.value,
+            date: this.date.current.value,
             time: this.time.current.value,
             airline: this.airline.current.value,
         });
@@ -49,7 +49,7 @@ class Search extends React.Component {
         const queryData = new Map();
         queryData["departure"] = (this.departure.current.value !== "") ? this.departure.current.value : "any";
         queryData["arrival"] = (this.arrival.current.value !== "") ? this.arrival.current.value : "any";
-        queryData["date"] = (this.dayOfWeek.current.value !== "") ? this.dayOfWeek.current.value : "any";
+        queryData["date"] = (this.date.current.value !== "") ? this.date.current.value : "any";
         queryData["time"] = (this.time.current.value !== "") ? this.time.current.value : "any";
         queryData["airline"] = (this.airline.current.value !== "") ? this.airline.current.value : "any";
 
@@ -61,8 +61,18 @@ class Search extends React.Component {
            }})
         .then(response => response.json()).then(data => {
             console.log(data);
-            this.setState({"searchResults": data.queried_forms});
-            data.queried_forms.length === 0 ? this.setState({"error": "Sorry, there are zero submissions with such parameters"}) : this.setState({"error": ""});
+            let queriedForms = []
+            if (data.queried_forms !== undefined) {
+                data.queried_forms.forEach(form => form["dateQuery"] = "any")
+                queriedForms = data.queried_forms;
+            } else {
+                data.close_date_forms.forEach(form => form["dateQuery"] = "closeDay");
+                data.same_weekday_forms.forEach(form => form["dateQuery"] = "sameWeekday");
+                queriedForms = data.close_date_forms.concat(data.same_weekday_forms);
+            }
+            console.log(queriedForms);
+            this.setState({"searchResults": queriedForms});
+            this.setState({"error": queriedForms.length === 0 ? "Sorry there are zero submissions with those parameters." : ""})
         }); 
     }
 
@@ -90,18 +100,9 @@ class Search extends React.Component {
                             </Form.Group>
                         </Col>
                         <Col>
-                            <Form.Group controlId="formDayOfWeek">
-                                <Form.Label>Day of the week:</Form.Label>
-                                <Form.Control ref={this.dayOfWeek} as="select" defaultValue="Day of Week">
-                                    <option>Any</option>
-                                    <option>Monday</option>
-                                    <option>Tuesday</option>
-                                    <option>Wednesday</option>
-                                    <option>Thursday</option>
-                                    <option>Friday</option>
-                                    <option>Saturday</option>
-                                    <option>Sunday</option>
-                                </Form.Control>
+                            <Form.Group controlId="formDate">
+                                <Form.Label>Date:</Form.Label>
+                                <Form.Control ref={this.date} type="date" placeholder="MM-DD-YYYY"/>
                             </Form.Group>
                         </Col>
                         
@@ -125,8 +126,8 @@ class Search extends React.Component {
                         </Col>
                     </Form.Row>
                 </Form>
-                {(this.state.searchResults.length !== 0) ? <SearchContainer searchResults={this.state.searchResults}/> : null}
-                {(this.state.error !== '') ? <Alert variant="danger">{this.state.error}</Alert> : null}
+                {(this.state.searchResults.length !== 0) ? <SearchContainer searchResults={this.state.searchResults} dateQuery={this.state.date}/> : null}
+                {(this.state.error !== "") ? <Alert variant="danger">{this.state.error}</Alert> : null}
             </div>
         )
     }
@@ -164,6 +165,7 @@ class SearchContainer extends React.Component {
                         time = {result.time}
                         date = {result.date}
                         comments = {result.comments}
+                        dateQuery = {result.dateQuery}
                     />
                 ))}
             </div>
@@ -178,8 +180,9 @@ class SearchResult extends React.Component {
         const crowdedness = "Crowdedness: " + this.props.crowded + "/100\n";
         const easeOfMind =  "Ease of mind: " + this.props.safety + "/100\n";
         const extraComments = "Comments: " + this.props.comments;
+        const backgroundColor = this.props.dateQuery === "sameWeekday" ? "#b0defa" : "#f2edf8";
         return (
-            <Card className="mt-2 mb-2" style={{"backgroundColor": "#f2edf8"}}>
+            <Card className="mt-2 mb-2" style={{"backgroundColor": backgroundColor}}>
                 <Card.Header className="pt-4">
                     <Card.Title>{title}</Card.Title>
                 </Card.Header>

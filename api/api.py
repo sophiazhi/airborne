@@ -45,7 +45,7 @@ def read():
         query = json.loads(request.args.get('query'))
         forms = firebase_result.values()
         print(f'forms received from firebase {forms}')
-        if (query["date"].lower() == "" or query["date"].lower() == "any"): 
+        if (query["date"].lower() == "any"): 
             queried_forms = {"queried_forms": list(query_forms(forms, query))}
         else:
             date_forms, dow_forms = query_forms_with_date(forms, query)
