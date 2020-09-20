@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import Alert from 'react-bootstrap/Alert';
 
 class Search extends React.Component {
     constructor(props) {
@@ -25,6 +26,7 @@ class Search extends React.Component {
             time: 'any',
             airline: 'any',
             searchResults: this.searchResults,
+            error: ''
         }
 
         this.result = React.createRef();
@@ -60,6 +62,7 @@ class Search extends React.Component {
         .then(response => response.json()).then(data => {
             console.log(data);
             this.setState({"searchResults": data.queried_forms});
+            data.queried_forms.length === 0 ? this.setState({"error": "Sorry, there are zero submissions with such parameters"}) : this.setState({"error": ""});
         }); 
     }
 
@@ -123,6 +126,7 @@ class Search extends React.Component {
                     </Form.Row>
                 </Form>
                 {(this.state.searchResults.length !== 0) ? <SearchContainer searchResults={this.state.searchResults}/> : null}
+                {(this.state.error !== '') ? <Alert variant="danger">{this.state.error}</Alert> : null}
             </div>
         )
     }
