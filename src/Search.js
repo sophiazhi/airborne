@@ -43,7 +43,7 @@ class Search extends React.Component {
 
         this.result = React.createRef();
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.renderSearchContainer = this.renderSearchContainer.bind(this);
+        this.getSearchResults = this.getSearchResults.bind(this);
     }
 
     handleSubmit() {
@@ -54,39 +54,44 @@ class Search extends React.Component {
             time: this.time.current.value,
             airline: this.airline.current.value,
         });
-        this.renderSearchContainer();
+        this.getSearchResults();
     }
 
-    renderSearchContainer() {
+    getSearchResults() {
         //only render if none in state aren't empty
+        /*
         const results = Object.assign({}, this.state);
         for (const i in results) {
             if (results[i] === '') {
                 return null;
             }
         }
+        */
         
         const queryData = new Map();
-        queryData["departure"] = (this.state.departure !== "") ? this.state.departure : "any";
-        queryData["arrival"] = (this.state.arrival !== "") ? this.state.arrival : "any";
-        queryData["date"] = (this.state.date !== "") ? this.state.date : "any";
-        queryData["time"] = (this.state.time !== "") ? this.state.time : "any";
-        queryData["airline"] = (this.state.airline !== "") ? this.state.airline : "any";
+        queryData["departure"] = (this.departure.current.value !== "") ? this.departure.current.value : "any";
+        queryData["arrival"] = (this.arrival.current.value !== "") ? this.arrival.current.value : "any";
+        queryData["date"] = (this.dayOfWeek.current.value !== "") ? this.dayOfWeek.current.value : "any";
+        queryData["time"] = (this.time.current.value !== "") ? this.time.current.value : "any";
+        queryData["airline"] = (this.airline.current.value !== "") ? this.airline.current.value : "any";
 
-        //const queryParam = "query=" + JSON.stringify queryData);
         console.log(`json data being passed to api ${JSON.stringify(queryData)}`);
         const params = "query=" + JSON.stringify(queryData);
         fetch('/list?' + params, { method: 'GET'}, {headers : { 
             'Content-Type': 'application/json',
             'Accept': 'application/json'
            }})
-        .then(response => response.json()).then(data => console.log(data));
+        .then(response => response.json()).then(data => {
+            console.log(data);
+            this.setState({"searchResults": data.queried_forms});
+        });
         
-        return(
+        /*return(
             <SearchContainer
                 searchResults={this.state.searchResults}       
             />
-        )
+        )*/
+        
     }
 
     render() {
@@ -148,6 +153,7 @@ class Search extends React.Component {
                         </Col>
                     </Form.Row>
                 </Form>
+                {(this.state.searchResults.length !== 0) ? <SearchContainer searchResults={this.state.searchResults} /> : null}
             </div>
         )
     }

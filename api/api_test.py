@@ -16,7 +16,7 @@ class testApi(unittest.TestCase):
         "departure": "any",
         "time": "any"}
 
-        actual = query_forms(self.forms, query)
+        actual = query_forms(self.forms, query)git 
 
         self.assertEqual(actual, self.forms, "expected all forms")
     
@@ -32,7 +32,7 @@ class testApi(unittest.TestCase):
 
         self.assertEqual(actual, expected_form, "expected only nyc form")
     
-    def test__query_forms__one_field_specified(self):
+    def test__query_forms__one_field_specified_lowercase(self):
         query = {"airline": "any",
         "departure": "NYc",
         "time": "any"}
