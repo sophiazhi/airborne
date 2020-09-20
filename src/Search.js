@@ -178,7 +178,7 @@ class SearchResult extends React.Component {
         const crowdedness = "Crowdedness: ";
         const safety =  "Safety: ";
         const extraComments = "Comments: " + this.props.comments;
-        const backgroundColor = this.props.dateQuery === "sameWeekday" ? "#b0defa" : "#f2edf8";
+        const backgroundColor = this.props.dateQuery === "sameWeekday" ? "#f2fafe" : "#f2edf8";
         return (
             <Card className="mt-2 mb-2" style={{"backgroundColor": backgroundColor}}>
                 <Card.Header className="pt-4">
