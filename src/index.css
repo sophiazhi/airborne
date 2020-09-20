@@ -8,7 +8,8 @@
 }*/
 
 :root {
-  --main-purple-color: #FF00CC; /*#c8b8db;*/
+  --main-purple-color:#660198; /*#c8b8db;*/
+  --secondary-purple-color:#CCFE;
   --secondary-blue-color: #3066be;
   --primary-text-color: #3c3744;
 }
@@ -38,7 +39,7 @@ code {
 }
 
 .body {
-  margin: 5% 10% 0%;
+  margin: 2% 10% 0%;
 }
 
 .body h1 {
