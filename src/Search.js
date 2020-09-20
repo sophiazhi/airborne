@@ -132,8 +132,6 @@ class Search extends React.Component {
     }
 }
 
-
-
 class SearchContainer extends React.Component {
     render() {
         const crowdedValues = this.props.searchResults.map(result => result["crowded"]);
@@ -149,7 +147,7 @@ class SearchContainer extends React.Component {
 
         return (
             <div className='body pb-5'>
-                <h3>Average Crowd:</h3>
+                <h3>Average Crowdedness:</h3>
                 <ProgressBar className='mb-4' now={avgCrowd} />
                 <h3>Average Safety:</h3>
                 <ProgressBar className='mb-4' now={avgEaseOfMind} />
@@ -175,8 +173,8 @@ class SearchResult extends React.Component {
     render() {
         const title = this.props.airline + " from " + this.props.departure + " to " + this.props.arrival;
         const subtitle = this.props.time + " flight on " + this.props.date;
-        const crowdedness = "Crowdedness: " + this.props.crowded + "/100\n";
-        const easeOfMind =  "Ease of mind: " + this.props.safety + "/100\n";
+        const crowdedness = "Crowdedness: ";
+        const safety =  "Safety: ";
         const extraComments = "Comments: " + this.props.comments;
         return (
             <Card className="mt-2 mb-2" style={{"backgroundColor": "#f2edf8"}}>
@@ -185,8 +183,10 @@ class SearchResult extends React.Component {
                 </Card.Header>
                 <Card.Body className="pt-4">
                     <Card.Subtitle className="pb-3" >{subtitle}</Card.Subtitle>
-                    <Card.Text>{crowdedness}</Card.Text>
-                    <Card.Text className="pb-3">{easeOfMind}</Card.Text>
+                    <Card.Text className='mb-2'>{crowdedness}</Card.Text>
+                    <ProgressBar className='progress-bar-card mt-0 mb-2' now={this.props.crowded}/>
+                    <Card.Text className='mb-2'>{safety}</Card.Text>
+                    <ProgressBar className='progress-bar-card mt-0 mb-3' now={this.props.safety}/>
                     <Card.Text>{extraComments}</Card.Text>
                 </Card.Body>
             </Card>
