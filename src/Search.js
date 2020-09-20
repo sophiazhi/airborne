@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 class Search extends React.Component {
     constructor(props) {
@@ -55,7 +56,7 @@ class Search extends React.Component {
         });
     }
 
-    async renderSearchContainer(){
+    renderSearchContainer() {
         //only render if none in state aren't empty
         const results = Object.assign({}, this.state);
         for (const i in results) {
@@ -71,10 +72,6 @@ class Search extends React.Component {
         queryData["time"] = this.time.current.value;
         queryData["airline"] = this.airline.current.value;
 
-        //const queryParam = "query=" + JSON.stringify queryData);
-        console.log(`json data being passed to api ${jsonParam}`);
-        await fetch('/add?' + jsonParam, { method: 'POST'})
-        .then(response => response.json()).then(data => console.log(data));
         // return(
         //     <SearchContainer
         //         departure={this.state.departure}
@@ -165,31 +162,37 @@ class SearchContainer extends React.Component {
         super(props);
         
         this.state = {
-            avgCrowded: 0,
-            avgSafety: 0,
+            avgCrowded: 30,
+            avgSafety: 60,
         }
     }
 
     render() {
+
+        // const crowdedValues = this.props.searchResults.map(result => result["crowded"]);
+        // const avgCrowded = crowdedValues.reduce((sumSoFar, currentValue) => sumSoFar + parseInt(currentValue), 0) / crowdedValues.length;
+
+        // const safetyValues = this.props.searchResults.map(result => result["safety"]);
+        // const avgSafety = safetyValues.reduce((sumSoFar, currentValue) => sumSoFar + parseInt(currentValue), 0) / safetyValues.length;
+
+        const avgCrowded = 50;
+
         return (
             <div className='body'>
-                <Row>
-                    <Col>
-                        {this.props.searchResults.map((result, index) => (
-                            <SearchResult
-                                key = {index}
-                                airline = {result.airline}
-                                arrival = {result.arrival}
-                                departure = {result.departure}
-                                safety = {result.safety}
-                                crowded = {result.crowded}
-                                time = {result.time}
-                                date = {result.date}
-                                comments = {result.comments}
-                            />
-                        ))}
-                    </Col>
-                </Row>
+                <ProgressBar now={avgCrowded} />
+                {this.props.searchResults.map((result, index) => (
+                    <SearchResult
+                        key = {index}
+                        airline = {result.airline}
+                        arrival = {result.arrival}
+                        departure = {result.departure}
+                        safety = {result.safety}
+                        crowded = {result.crowded}
+                        time = {result.time}
+                        date = {result.date}
+                        comments = {result.comments}
+                    />
+                ))}
             </div>
         )
     }
