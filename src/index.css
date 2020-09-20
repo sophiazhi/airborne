@@ -19,9 +19,17 @@ code {
 }
 
 .App {
-  background-color: var(--main-purple-color);
+  background-color: white;
   color: var(--primary-text-color); 
   min-height:100vh;
+}
+
+.header {
+  background-color: var(--main-purple-color);
+  padding-top: 30px;
+  padding-bottom: 30px;
+  color: var(--primary-text-color);
+  font-size: 50px;
 }
 
 .body {

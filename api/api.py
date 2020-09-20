@@ -2,6 +2,7 @@ import time
 from flask import Flask, jsonify, request
 from firebase_admin import credentials, initialize_app, db
 import json
+from datetime import date
 
 app = Flask(__name__)
 
@@ -58,10 +59,15 @@ def query_forms(forms, query):
         forms : list of form objects, where a form is a dictionary mapping string to string
         query : a dictionary mapping string to string or "any" if it the query parameter is over all values
     """
+    day_of_week = {"monday":0,"tuesday":1,"wednesday":2,"thursday":3,"friday":4,"saturday":5,"sunday":6}
+    # edit this to include dates that share a day of the week or are within one month of the date specified
     queried_forms = forms
     for query_param in query:
         query_value = query[query_param].lower()
         if query_value == "any": continue
+        if query_param == "date":
+            queried_forms = [form for form in queried_forms if date.fromisoformat(form[query_param]).weekday() == day_of_week[query_value]]
+            continue
         queried_forms = [form for form in queried_forms if form[query_param].lower() == query_value]
     return queried_forms
 

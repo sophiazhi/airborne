@@ -15,22 +15,8 @@ class Search extends React.Component {
         this.time = React.createRef();
         this.airline = React.createRef();
 
-        //fake map
-        /*this.searchResult = new Map()
-        this.searchResult['airline'] = 'delta'
-        this.searchResult['arrival'] = 'nyc'
-        this.searchResult['departure'] = 'boston'
-        this.searchResult['safety'] = '68'
-        this.searchResult['crowded'] = '19'
-        this.searchResult['date'] = '9/19/20'
-        this.searchResult['time'] = 'Early morning'
-        this.searchResult['comments'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eleifend aliquam quam non placerat. Pellentesque sodales vulputate urna sit amet molestie. Proin bibendum posuere ligula id laoreet. Donec pretium eros ut arcu porttitor fermentum. Nam congue neque at justo blandit suscipit. Nam tempus eu erat non faucibus. Donec mauris enim, faucibus id maximus a, tempus id turpis. Suspendisse bibendum ex eu sapien vulputate venenatis in at felis. Fusce hendrerit lorem eget imperdiet gravida. Suspendisse cursus malesuada tortor sodales vulputate. Nullam facilisis eros et libero mollis interdum."
-*/
         //gen fake array
         this.searchResults = []
-        /*for (let i = 0; i < 10; i++) {
-            this.searchResults.push(this.searchResult);
-        }*/
 
         this.state = {
             departure: 'any',
@@ -58,16 +44,6 @@ class Search extends React.Component {
     }
 
     getSearchResults() {
-        //only render if none in state aren't empty
-        /*
-        const results = Object.assign({}, this.state);
-        for (const i in results) {
-            if (results[i] === '') {
-                return null;
-            }
-        }
-        */
-        
         const queryData = new Map();
         queryData["departure"] = (this.departure.current.value !== "") ? this.departure.current.value : "any";
         queryData["arrival"] = (this.arrival.current.value !== "") ? this.arrival.current.value : "any";
@@ -84,21 +60,13 @@ class Search extends React.Component {
         .then(response => response.json()).then(data => {
             console.log(data);
             this.setState({"searchResults": data.queried_forms});
-        });
-
-        
-        /*return(
-            <SearchContainer
-                searchResults={this.state.searchResults}       
-            />
-        )*/
-        
+        }); 
     }
 
     render() {
         return (
             <div>
-                <Form className="searchbar-container" className="body" >
+                <Form className="searchbar-container body" >
                     <Form.Row className="searchbar d-flex text-left">
                         <Col>
                             <Form.Group controlId="formAirline">
@@ -167,13 +135,13 @@ class SearchContainer extends React.Component {
         const crowdedValues = this.props.searchResults.map(result => result["crowded"]);
         const easeOfMindValues = this.props.searchResults.map(result => result["safety"])
         let totalCrowd = 0;
-        let totalSafety = 0;
+        let totalEaseOfMindValues = 0;
         for(let i = 0; i < crowdedValues.length; i++) {
             totalCrowd += parseInt(crowdedValues[i], 10);
-            totalSafety += parseInt(easeOfMindValues[i], 10);
+            totalEaseOfMindValues += parseInt(easeOfMindValues[i], 10);
         }
         const avgCrowd = (crowdedValues.length !== 0) ? totalCrowd / crowdedValues.length : 0;
-        const avgEaseOfMind = (crowdedValues.length !== 0) ? totalSafety / crowdedValues.length : 0;
+        const avgEaseOfMind = (crowdedValues.length !== 0) ? totalEaseOfMindValues / crowdedValues.length : 0;
 
         return (
             <div className='body pb-5'>
