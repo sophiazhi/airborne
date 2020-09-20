@@ -16,7 +16,7 @@ class testApi(unittest.TestCase):
         "departure": "any",
         "time": "any"}
 
-        actual = query_forms(self.forms, query)git 
+        actual = query_forms(self.forms, query)
 
         self.assertEqual(actual, self.forms, "expected all forms")
     
