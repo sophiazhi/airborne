@@ -163,32 +163,24 @@ class Search extends React.Component {
 
 
 class SearchContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            avgCrowd: 0,
-            avgSafety: 0,
-        };
-    }
     render() {
-
         const crowdedValues = this.props.searchResults.map(result => result["crowded"]);
-        const safetyValues = this.props.searchResults.map(result => result["safety"])
+        const easeOfMindValues = this.props.searchResults.map(result => result["safety"])
         let totalCrowd = 0;
         let totalSafety = 0;
         for(let i = 0; i < crowdedValues.length; i++) {
             totalCrowd += parseInt(crowdedValues[i], 10);
-            totalSafety += parseInt(safetyValues[i], 10);
+            totalSafety += parseInt(easeOfMindValues[i], 10);
         }
-        this.state.avgCrowd = (crowdedValues.length !== 0) ? totalCrowd / crowdedValues.length : 0;
-        this.state.avgSafety = (crowdedValues.length !== 0) ? totalSafety / crowdedValues.length : 0;
+        const avgCrowd = (crowdedValues.length !== 0) ? totalCrowd / crowdedValues.length : 0;
+        const avgEaseOfMind = (crowdedValues.length !== 0) ? totalSafety / crowdedValues.length : 0;
 
         return (
             <div className='body pb-5'>
                 <h3>Average Crowd:</h3>
-                <ProgressBar className='mb-4' now={this.state.avgCrowd} />
+                <ProgressBar className='mb-4' now={avgCrowd} />
                 <h3>Average Safety:</h3>
-                <ProgressBar className='mb-4' now={this.state.avgSafety} />
+                <ProgressBar className='mb-4' now={avgEaseOfMind} />
                 {this.props.searchResults.map((result, index) => (
                     <SearchResult
                         key = {index}
