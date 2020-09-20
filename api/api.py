@@ -30,7 +30,7 @@ def create():
         ref.push(form)
         return jsonify({"success": True}), 200
     except Exception as e:
-        return f"An Error Occured: {e}"
+        return f"An Error Occurred: {e}"
 
 
 @app.route('/list', methods=['GET'])
@@ -48,8 +48,8 @@ def read():
         print(f'queried forms {queried_forms}')
         return jsonify(queried_forms), 200
     except Exception as e:
-        print(f"An Error Occured: {e}")
-        return f"An Error Occured: {e}"
+        print(f"An Error Occurred: {e}")
+        return f"An Error Occurred: {e}"
 
 
 def query_forms(forms, query):
