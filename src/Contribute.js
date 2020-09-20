@@ -2,7 +2,6 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import Alert from 'react-bootstrap/Alert';
 
 class Contribute extends React.Component {
@@ -37,25 +36,25 @@ class Contribute extends React.Component {
     }
 
     async handleSubmit(event) {
-        const form_data = new Map();
-        form_data["departure"] = this.departure.current.value;
-        form_data["arrival"] = this.arrival.current.value;
-        form_data["date"] = this.date.current.value;
-        form_data["time"] = this.time.current.value;
-        form_data["airline"] = this.airline.current.value;
-        form_data["safety"] = this.safety.current.value;
-        form_data["crowded"] = this.crowded.current.value;
-        form_data["comments"] = this.comments.current.value;
+        const formData = new Map();
+        formData["departure"] = this.departure.current.value;
+        formData["arrival"] = this.arrival.current.value;
+        formData["date"] = this.date.current.value;
+        formData["time"] = this.time.current.value;
+        formData["airline"] = this.airline.current.value;
+        formData["safety"] = this.safety.current.value;
+        formData["crowded"] = this.crowded.current.value;
+        formData["comments"] = this.comments.current.value;
 
         const missing = this.missingFields();
         if (missing.length === 0) {
             this.setState({"error": ''});
             // alert for testing
-            alert(JSON.stringify(form_data));
+            alert(JSON.stringify(formData));
             // actual save to database
-            const json_param = "json=" + JSON.stringify(form_data);
-            console.log(`json data being passed to api ${json_param}`);
-            await fetch('/add?' + json_param, { method: 'POST'})
+            const jsonParam = "json=" + JSON.stringify(formData);
+            console.log(`json data being passed to api ${jsonParam}`);
+            await fetch('/add?' + jsonParam, { method: 'POST'})
             .then(response => response.json()).then(data => console.log(data));
         } else {
             let missingFields = "";
@@ -139,7 +138,7 @@ class Contribute extends React.Component {
                 </Form.Group>
                 
                 {(this.state.error !== '') ? <Alert variant="danger">{this.state.error}</Alert> : null}
-                <Button className="mb-5" onClick={this.handleSubmit}>Submit</Button>
+                <Button onClick={this.handleSubmit}>Submit</Button>
             </Form>
         )
     }
