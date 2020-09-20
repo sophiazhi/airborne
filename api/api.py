@@ -44,9 +44,9 @@ def read():
         query = json.loads(request.args.get('query'))
         forms = firebase_result.values()
         print(f'forms received from firebase {forms}')
-        queried_forms = query_forms(forms, query)
-        print(f'queried forms {queried}')
-        return jsonify(queried), 200
+        queried_forms = {"queried_forms": list(query_forms(forms, query))}
+        print(f'queried forms {queried_forms}')
+        return jsonify(queried_forms), 200
     except Exception as e:
         print(f"An Error Occured: {e}")
         return f"An Error Occured: {e}"
