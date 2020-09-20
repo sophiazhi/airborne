@@ -39,8 +39,6 @@ class Search extends React.Component {
             time: 'any',
             airline: 'any',
             searchResults: this.searchResults,
-            avdCrowded: 0,
-            avgSafety: 0,
         }
 
         this.result = React.createRef();
@@ -88,16 +86,7 @@ class Search extends React.Component {
             this.setState({"searchResults": data.queried_forms});
         });
 
-        let totalCrowded = 0
-        let totalSafety = 0
-        for(let i = 0; i < this.state.searchResults.length; i++) { 
-            totalCrowded += parseInt(this.state.searchResults[i]['crowded'], 10);
-            totalSafety += parseInt(this.state.searchResults[i]['safety'], 10);
-        }
-        this.setState({
-            avgCrowded: (this.state.searchResults.length !== 0) ? totalCrowded / this.state.searchResults.length : 0,
-            avgSafety: (this.state.searchResults.length !== 0) ? totalSafety / this.state.searchResults.length : 0,
-        })
+        
         /*return(
             <SearchContainer
                 searchResults={this.state.searchResults}       
@@ -165,7 +154,7 @@ class Search extends React.Component {
                         </Col>
                     </Form.Row>
                 </Form>
-                {(this.state.searchResults.length !== 0) ? <SearchContainer searchResults={this.state.searchResults} avgCrowded={this.state.avgCrowded} avgSafety={this.state.avgSafety}/> : null}
+                {(this.state.searchResults.length !== 0) ? <SearchContainer searchResults={this.state.searchResults}/> : null}
             </div>
         )
     }
@@ -174,18 +163,32 @@ class Search extends React.Component {
 
 
 class SearchContainer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            avgCrowd: 0,
+            avgSafety: 0,
+        };
+    }
     render() {
 
-        //const crowdedValues = this.props.searchResults.map(result => result["crowded"]);
-        //const avgCrowded = crowdedValues.reduce((sumSoFar, currentValue) => sumSoFar + parseInt(currentValue, 10), 0) / crowdedValues.length;
-
-        // const safetyValues = this.props.searchResults.map(result => result["safety"]);
-        // const avgSafety = safetyValues.reduce((sumSoFar, currentValue) => sumSoFar + parseInt(currentValue), 0) / safetyValues.length;
-
+        const crowdedValues = this.props.searchResults.map(result => result["crowded"]);
+        const safetyValues = this.props.searchResults.map(result => result["safety"])
+        let totalCrowd = 0;
+        let totalSafety = 0;
+        for(let i = 0; i < crowdedValues.length; i++) {
+            totalCrowd += parseInt(crowdedValues[i], 10);
+            totalSafety += parseInt(safetyValues[i], 10);
+        }
+        this.state.avgCrowd = (crowdedValues.length !== 0) ? totalCrowd / crowdedValues.length : 0;
+        this.state.avgSafety = (crowdedValues.length !== 0) ? totalSafety / crowdedValues.length : 0;
 
         return (
             <div className='body pb-5'>
-                <ProgressBar now={this.props.avgCrowded} />
+                <h3>Average Crowd:</h3>
+                <ProgressBar className='mb-4' now={this.state.avgCrowd} />
+                <h3>Average Safety:</h3>
+                <ProgressBar className='mb-4' now={this.state.avgSafety} />
                 {this.props.searchResults.map((result, index) => (
                     <SearchResult
                         key = {index}
