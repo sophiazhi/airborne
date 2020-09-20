@@ -10,7 +10,7 @@ import Contribute from './Contribute';
 function App() {
   return (
     <div className="App">
-      <div className="header shadow-sm"><h>Airborne</h></div>
+      <div className="header shadow-sm"><h1>Airborne</h1></div>
       <Tabs defaultActiveKey="search" id="main-tabs" variant="pills" className="tabs">
         <Tab eventKey="search" title="Search">
           <Search />
