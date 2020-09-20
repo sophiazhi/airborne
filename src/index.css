@@ -8,7 +8,7 @@
 }*/
 
 :root {
-  --main-purple-color: #c8b8db;
+  --main-purple-color: #FF00CC; /*#c8b8db;*/
   --secondary-blue-color: #3066be;
   --primary-text-color: #3c3744;
 }
@@ -30,6 +30,11 @@ code {
   padding-bottom: 30px;
   color: var(--primary-text-color);
   font-size: 50px;
+}
+
+.header h {
+  color: white;
+  font-weight: 500;
 }
 
 .body {
@@ -64,3 +69,24 @@ code {
   padding-top: 2.5em;
   font-size: 20px;
 }
+
+/*tab inactive color*/
+.nav-item {
+  background-color: white;
+}
+
+/*tab active color*/
+.nav-pills .nav-link.active{
+  color: #fff;
+  background-color: var(--main-purple-color) !important;
+}
+
+.nav-pills .nav-link {
+  color: var(--main-purple-color);
+}
+
+.btn-primary {
+  background-color:var(--main-purple-color) !important;
+  border-color: var(--secondary-blue-color) !important;
+}
+
