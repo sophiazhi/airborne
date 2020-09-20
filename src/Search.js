@@ -183,8 +183,10 @@ class SearchResult extends React.Component {
                 </Card.Header>
                 <Card.Body className="pt-4">
                     <Card.Subtitle className="pb-3" >{subtitle}</Card.Subtitle>
-                    <Card.Text>{crowdedness} <ProgressBar className='progress-bar-card mt-2 align-center' now={this.props.crowded}/></Card.Text>
-                    <Card.Text className="pb-3">{safety}<ProgressBar className='progress-bar-card mt-2 align-center' now={this.props.safety}/></Card.Text>
+                    <Card.Text className='mb-2'>{crowdedness}</Card.Text>
+                    <ProgressBar className='progress-bar-card mt-0 mb-2' now={this.props.crowded}/>
+                    <Card.Text className='mb-2'>{safety}</Card.Text>
+                    <ProgressBar className='progress-bar-card mt-0 mb-3' now={this.props.safety}/>
                     <Card.Text>{extraComments}</Card.Text>
                 </Card.Body>
             </Card>
