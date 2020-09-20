@@ -12,6 +12,9 @@
   --secondary-purple-color:#CCFE;
   --secondary-blue-color: #3066be;
   --primary-text-color: #3c3744;
+  --progress-bar-low: #ffcccc;
+  --progress-bar-medium: #ffffcc;
+  --progress-bar-high: #ccffcc;
 }
 
 code {
@@ -98,8 +101,16 @@ code {
   margin-left: auto;
   margin-right:auto;
 }
-.progress-bar{
-  background-color: var(--main-purple-color) !important;
+.high > .progress-bar{
+  background-color: var(--progress-bar-high) !important;
+}
+
+.medium > .progress-bar{
+  background-color: var(--progress-bar-medium) !important;
+}
+
+.low > .progress-bar{
+  background-color: var(--progress-bar-low) !important;
 }
 
 .progress-bar-card {

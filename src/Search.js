@@ -146,12 +146,15 @@ class SearchContainer extends React.Component {
         const avgCrowd = (crowdedValues.length !== 0) ? totalCrowd / crowdedValues.length : 0;
         const avgEaseOfMind = (crowdedValues.length !== 0) ? totalEaseOfMindValues / crowdedValues.length : 0;
 
+        const crowdPoints = avgCrowd < 25 ? "low" : (avgCrowd < 75 ? "medium" : "high");
+        const easeOfMindPoints = avgEaseOfMind < 25 ? "low" : (avgEaseOfMind < 75 ? "medium" : "high");
+
         return (
             <div className='body pb-5'>
                 <h3>Average Crowdedness:</h3>
-                <ProgressBar className='mb-4' now={avgCrowd} />
+                <ProgressBar className={'mb-4 ' + crowdPoints} now={avgCrowd} />
                 <h3>Average Safety:</h3>
-                <ProgressBar className='mb-4' now={avgEaseOfMind} />
+                <ProgressBar className={'mb-4 ' + easeOfMindPoints} now={avgEaseOfMind} />
                 {this.props.searchResults.map((result, index) => (
                     <SearchResult
                         key = {index}
@@ -179,6 +182,8 @@ class SearchResult extends React.Component {
         const safety =  "Safety: ";
         const extraComments = "Comments: " + this.props.comments;
         const backgroundColor = this.props.dateQuery === "sameWeekday" ? "#f2fafe" : "#f2edf8";
+        const crowdPoints = this.props.crowded < 25 ? "low" : (this.props.crowded < 75 ? "medium" : "high");
+        const easeOfMindPoints = this.props.safety < 25 ? "low" : (this.props.safety < 75 ? "medium" : "high");
         return (
             <Card className="mt-2 mb-2" style={{"backgroundColor": backgroundColor}}>
                 <Card.Header className="pt-4">
@@ -187,9 +192,9 @@ class SearchResult extends React.Component {
                 <Card.Body className="pt-4">
                     <Card.Subtitle className="pb-3" >{subtitle}</Card.Subtitle>
                     <Card.Text className='mb-2'>{crowdedness}</Card.Text>
-                    <ProgressBar className='progress-bar-card mt-0 mb-2' now={this.props.crowded}/>
+                    <ProgressBar className={'progress-bar-card mt-0 mb-2 ' + crowdPoints} now={this.props.crowded}/>
                     <Card.Text className='mb-2'>{safety}</Card.Text>
-                    <ProgressBar className='progress-bar-card mt-0 mb-3' now={this.props.safety}/>
+                    <ProgressBar className={'progress-bar-card mt-0 mb-3 ' + easeOfMindPoints} now={this.props.safety}/>
                     <Card.Text>{extraComments}</Card.Text>
                 </Card.Body>
             </Card>
