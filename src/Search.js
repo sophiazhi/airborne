@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 class Search extends React.Component {
     constructor(props) {
@@ -15,7 +16,7 @@ class Search extends React.Component {
         this.airline = React.createRef();
 
         //fake map
-        this.searchResult = new Map()
+        /*this.searchResult = new Map()
         this.searchResult['airline'] = 'delta'
         this.searchResult['arrival'] = 'nyc'
         this.searchResult['departure'] = 'boston'
@@ -24,12 +25,12 @@ class Search extends React.Component {
         this.searchResult['date'] = '9/19/20'
         this.searchResult['time'] = 'Early morning'
         this.searchResult['comments'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eleifend aliquam quam non placerat. Pellentesque sodales vulputate urna sit amet molestie. Proin bibendum posuere ligula id laoreet. Donec pretium eros ut arcu porttitor fermentum. Nam congue neque at justo blandit suscipit. Nam tempus eu erat non faucibus. Donec mauris enim, faucibus id maximus a, tempus id turpis. Suspendisse bibendum ex eu sapien vulputate venenatis in at felis. Fusce hendrerit lorem eget imperdiet gravida. Suspendisse cursus malesuada tortor sodales vulputate. Nullam facilisis eros et libero mollis interdum."
-
+*/
         //gen fake array
         this.searchResults = []
-        for (let i = 0; i < 11; i++) {
+        /*for (let i = 0; i < 10; i++) {
             this.searchResults.push(this.searchResult);
-        }
+        }*/
 
         this.state = {
             departure: 'any',
@@ -53,40 +54,34 @@ class Search extends React.Component {
             time: this.time.current.value,
             airline: this.airline.current.value,
         });
+        this.renderSearchContainer();
     }
 
-    /*async*/ renderSearchContainer(){
+    renderSearchContainer() {
         //only render if none in state aren't empty
         const results = Object.assign({}, this.state);
         for (const i in results) {
-            if (results[i] == '') {
+            if (results[i] === '') {
                 return null;
             }
         }
         /*
         const queryData = new Map();
-        queryData["departure"] = this.departure.current.value != "" ? this.departure.current.value : "any";
-        queryData["arrival"] = this.arrival.current.value;
-        queryData["date"] = this.date.current.value;
-        queryData["time"] = this.time.current.value;
-        queryData["airline"] = this.airline.current.value;
+        queryData["departure"] = (this.state.departure !== "") ? this.state.departure : "any";
+        queryData["arrival"] = (this.state.arrival !== "") ? this.state.arrival : "any";
+        queryData["date"] = (this.state.date !== "") ? this.state.date : "any";
+        queryData["time"] = (this.state.time !== "") ? this.state.time : "any";
+        queryData["airline"] = (this.state.airline !== "") ? this.state.airline : "any";
 
         //const queryParam = "query=" + JSON.stringify queryData);
-        console.log(`json data being passed to api ${jsonParam}`);
-        await fetch('/add?' + jsonParam, { method: 'POST'})
+        console.log(`json data being passed to api ${JSON.stringify(queryData)}`);
+        const params = "query=" + JSON.stringify(queryData);
+        fetch('/list?' + params, { method: 'GET'}, {headers : { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+           }})
         .then(response => response.json()).then(data => console.log(data));
         */
-        // return(
-        //     <SearchContainer
-        //         departure={this.state.departure}
-        //         arrival={this.state.arrival}
-        //         dayOfWeek={this.state.dayOfWeek}
-        //         time={this.state.time}
-        //         airline={this.state.airline} 
-        //         searchResults={this.state.searchResults}       
-        //     />
-        // )
-
         return(
             <SearchContainer
                 searchResults={this.state.searchResults}       
@@ -153,7 +148,6 @@ class Search extends React.Component {
                         </Col>
                     </Form.Row>
                 </Form>
-                {this.renderSearchContainer()}
             </div>
         )
     }
@@ -166,31 +160,37 @@ class SearchContainer extends React.Component {
         super(props);
         
         this.state = {
-            avgCrowded: 0,
-            avgSafety: 0,
+            avgCrowded: 30,
+            avgSafety: 60,
         }
     }
 
     render() {
+
+        // const crowdedValues = this.props.searchResults.map(result => result["crowded"]);
+        // const avgCrowded = crowdedValues.reduce((sumSoFar, currentValue) => sumSoFar + parseInt(currentValue), 0) / crowdedValues.length;
+
+        // const safetyValues = this.props.searchResults.map(result => result["safety"]);
+        // const avgSafety = safetyValues.reduce((sumSoFar, currentValue) => sumSoFar + parseInt(currentValue), 0) / safetyValues.length;
+
+        const avgCrowded = 50;
+
         return (
             <div className='body'>
-                <Row>
-                    <Col className="mb-5">
-                        {this.props.searchResults.map((result, index) => (
-                            <SearchResult
-                                key = {index}
-                                airline = {result.airline}
-                                arrival = {result.arrival}
-                                departure = {result.departure}
-                                safety = {result.safety}
-                                crowded = {result.crowded}
-                                time = {result.time}
-                                date = {result.date}
-                                comments = {result.comments}
-                            />
-                        ))}
-                    </Col>
-                </Row>
+                <ProgressBar now={avgCrowded} />
+                {this.props.searchResults.map((result, index) => (
+                    <SearchResult
+                        key = {index}
+                        airline = {result.airline}
+                        arrival = {result.arrival}
+                        departure = {result.departure}
+                        safety = {result.safety}
+                        crowded = {result.crowded}
+                        time = {result.time}
+                        date = {result.date}
+                        comments = {result.comments}
+                    />
+                ))}
             </div>
         )
     }
@@ -204,7 +204,7 @@ class SearchResult extends React.Component {
         const easeOfMind =  "Ease of mind: " + this.props.safety + "/100\n";
         const extraComments = "Comments: " + this.props.comments;
         return (
-            <Card className="mt-2 mb-2">
+            <Card className="mt-2 mb-2" style={{"backgroundColor": "#f2edf8"}}>
                 <Card.Header className="pt-4">
                     <Card.Title>{title}</Card.Title>
                 </Card.Header>
