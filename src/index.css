@@ -37,7 +37,6 @@ code {
   margin-top: 3%;
   margin-left: 5%;
   margin-right: 5%;
-  flex-wrap: wrap;
 }
 
 @media screen and (max-width: 875px) { .searchbar {flex-direction: column;} }

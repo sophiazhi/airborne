@@ -182,7 +182,7 @@ class SearchContainer extends React.Component {
         const avgCrowded = 50;
 
         return (
-            <div className='body'>
+            <div className='body pb-5'>
                 <ProgressBar now={avgCrowded} />
                 {this.props.searchResults.map((result, index) => (
                     <SearchResult
